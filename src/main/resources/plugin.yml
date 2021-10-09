@@ -6,3 +6,16 @@ prefix: WarpPlugin
 authors: [ Agentew04 ]
 description: A simple plugin that implement a /warp command
 website: agentew04.github.io
+commands:
+  warp:
+    description: Teleports to a specific warp
+    usage: /warp <warpName>
+  warps:
+    description: Lists all warps on the server
+    usage: /warps
+  setwarp:
+    description: Creates a new warp on the current coordinates
+    usage: /setwarp <warpName>
+  delwarp:
+    description: Deletes a warp
+    usage: /delwarp <warpName>
