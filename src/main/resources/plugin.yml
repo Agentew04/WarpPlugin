@@ -1,0 +1,8 @@
+name: WarpPlugin
+version: '${project.version}'
+main: io.github.agentew04.warpplugin.Warpplugin
+api-version: 1.17
+prefix: WarpPlugin
+authors: [ Agentew04 ]
+description: A simple plugin that implement a /warp command
+website: agentew04.github.io
