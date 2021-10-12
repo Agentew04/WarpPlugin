@@ -10,12 +10,18 @@ commands:
   warp:
     description: Teleports to a specific warp
     usage: /warp <warpName>
-  warps:
+  warplist:
     description: Lists all warps on the server
     usage: /warps
+    aliases:
+      - warps
   setwarp:
     description: Creates a new warp on the current coordinates
     usage: /setwarp <warpName>
+    aliases:
+      - addwarp
   delwarp:
     description: Deletes a warp
     usage: /delwarp <warpName>
+    aliases:
+      - remwarp
