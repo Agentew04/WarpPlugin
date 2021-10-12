@@ -3,6 +3,8 @@ package io.github.agentew04.warpplugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 public final class Warpplugin extends JavaPlugin {
 
     public FileConfiguration config;
@@ -11,34 +13,48 @@ public final class Warpplugin extends JavaPlugin {
 
         //commands
         this.getCommand("warp").setExecutor(new WarpCommand(this));
+        this.getCommand("setwarp").setExecutor(new SetWarpCommand(this));
+        this.getCommand("delwarp").setExecutor(new DelWarpCommand(this));
+        this.getCommand("warplist").setExecutor(new WarpListCommand(this));
 
-        //default values
-        config = this.getConfig();
-        config.addDefault("warps.zero.x",0);
-        config.addDefault("warps.zero.y",62);
-        config.addDefault("warps.zero.z",0);
-        this.saveDefaultConfig();
+        this.config=getConfig();
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        this.saveConfig();
     }
 
-    public void setCoords(String name, Coordinates coord){
-        config.set("warps."+name+"x",coord.x);
-        config.set("warps."+name+"y",coord.y);
-        config.set("warps."+name+"z",coord.z);
-    }
-    public Coordinates getCoords(String name){
-        if(config.isSet("warps."+name+"x")){
-            int x = config.getInt("warps."+name+"x");
-            int y = config.getInt("warps."+name+"y");
-            int z = config.getInt("warps."+name+"z");
-            return new Coordinates(x,y,z);
-        }else{
-            return Coordinates.zero;
+    public void setWarp(String name, Location location){
+        config.set("warps."+name,location);
+        List<String> warps =  config.getStringList("warplist");
+        if(!warps.contains(name)){
+            warps.add(name);
+            config.set("warplist",warps);
         }
+        this.saveConfig();
+
+    }
+    public List<String> getWarps(){
+        return config.getStringList("warplist");
+    }
+    public Location getWarp(String name){
+        if(config.isSet("warps."+name)){
+            //exists
+            return config.getLocation("warps."+name);
+        }else{
+            //doesn't exist
+            return null;
+        }
+    }
+    public void delWarp(String name){
+        config.set("warps."+name,null);
+        List<String> list = config.getStringList("warplist");
+        list.remove(name);
+        config.set("warplist",list);
+        this.saveConfig();
+
     }
 }
 
